@@ -10,6 +10,7 @@ import PriorityBadge from "../components/ui/PriorityBadge";
 
 export default function SPK() {
   const navigate = useNavigate();
+  const API = import.meta.env.VITE_API_URL;
 
   const [data, setData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -19,7 +20,7 @@ export default function SPK() {
 
   const fetchSPK = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/spk", {
+      const response = await axios.get(`${API}/api/spk`, {
         params: {
           search: searchTerm,
           status: filterStatus,
@@ -44,7 +45,7 @@ export default function SPK() {
     if (!window.confirm("Yakin ingin menghapus SPK ini?")) return;
 
     try {
-      await axios.delete(`http://localhost:5000/api/spk/${id}`);
+      await axios.delete(`${API}/api/spk/${id}`);
       fetchSPK(); // refresh data
     } catch (error) {
       console.error("Gagal menghapus SPK", error);

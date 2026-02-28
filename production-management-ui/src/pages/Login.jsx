@@ -8,18 +8,15 @@ export default function Login({ onLogin }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-
+  const API = import.meta.env.VITE_API_URL;
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post(
-        "http://localhost:5000/api/auth/login",
-        {
-          email,
-          password,
-        },
-      );
+      const response = await axios.post(`${API}/api/auth/login`, {
+        email,
+        password,
+      });
 
       const { token } = response.data;
 

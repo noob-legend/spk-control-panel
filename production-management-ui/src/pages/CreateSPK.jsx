@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import SPKForm from "../components/spk/SPKForm";
 
 export default function CreateSPK() {
+  const API = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
 
   const handleSubmit = async (form) => {
@@ -16,7 +17,7 @@ export default function CreateSPK() {
     };
 
     try {
-      await axios.post("http://localhost:5000/api/spk", cleanedData);
+      await axios.post(`${API}/api/spk`, cleanedData);
 
       toast.success("SPK berhasil ditambahkan");
       navigate("/spk");

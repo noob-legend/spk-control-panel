@@ -4,6 +4,7 @@ import Input from "../ui/Input";
 import axios from "axios";
 
 export default function AddProductModal({ spkId, onClose, onAdded }) {
+  const API = import.meta.env.VITE_API_URL;
   const [form, setForm] = useState({
     kode: "",
     item: "",
@@ -46,7 +47,7 @@ export default function AddProductModal({ spkId, onClose, onAdded }) {
       if (payload[key] === "") payload[key] = 0;
     });
     try {
-      await axios.post(`http://localhost:5000/api/product`, payload);
+      await axios.post(`${API}/api/product`, payload);
       onAdded();
       onClose();
     } catch (err) {

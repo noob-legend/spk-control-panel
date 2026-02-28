@@ -8,11 +8,12 @@ export default function SPKEdit() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [initialData, setInitialData] = useState(null);
+  const API = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const fetchSPK = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/spk/${id}`);
+        const res = await axios.get(`${API}/api/spk/${id}`);
         setInitialData(res.data.data);
       } catch (err) {
         console.error(err);
@@ -24,7 +25,7 @@ export default function SPKEdit() {
 
   const handleUpdate = async (formData) => {
     try {
-      await axios.put(`http://localhost:5000/api/spk/${id}`, formData);
+      await axios.put(`${API}/api/spk/${id}`, formData);
       navigate("/spk");
     } catch (error) {
       console.error("Gagal update SPK", error);

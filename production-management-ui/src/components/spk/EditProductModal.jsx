@@ -14,6 +14,7 @@ export default function EditProductModal({ product, onClose, onUpdated }) {
     press: product.press || "",
     sisa: product.sisa || "",
   });
+  const API = import.meta.env.VITE_API_URL;
 
   const handleChange = (e) => {
     setForm({
@@ -26,7 +27,7 @@ export default function EditProductModal({ product, onClose, onUpdated }) {
     e.preventDefault();
 
     try {
-      await axios.put(`http://localhost:5000/api/product/${product._id}`, {
+      await axios.put(`${API}/api/product/${product._id}`, {
         ...form,
         qty: Number(form.qty),
         press: Number(form.press),

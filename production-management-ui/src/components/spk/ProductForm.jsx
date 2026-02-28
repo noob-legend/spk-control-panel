@@ -4,6 +4,7 @@ import Input from "../ui/Input";
 import Button from "../ui/Button";
 
 export default function ProductForm({ spkId, onSuccess }) {
+  const API = import.meta.env.VITE_API_URL;
   const [form, setForm] = useState({
     kode: "",
     item: "",
@@ -35,7 +36,7 @@ export default function ProductForm({ spkId, onSuccess }) {
     }
 
     try {
-      await axios.post("http://localhost:5000/api/products", {
+      await axios.post(`${API}/api/products`, {
         ...form,
         spk_id: spkId,
       });

@@ -9,6 +9,7 @@ import PriorityBadge from "../components/ui/PriorityBadge";
 
 export default function Dashboard() {
   const navigate = useNavigate();
+  const API = import.meta.env.VITE_API_URL;
 
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -16,7 +17,7 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchSPK = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/spk");
+        const response = await axios.get(`${API}/api/spk`);
 
         const spkData = Array.isArray(response.data.data)
           ? response.data.data
