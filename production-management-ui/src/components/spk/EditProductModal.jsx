@@ -15,6 +15,12 @@ export default function EditProductModal({ product, onClose, onUpdated }) {
     sisa: product.sisa || "",
   });
   const API = import.meta.env.VITE_API_URL;
+  const api = axios.create({
+  baseURL: API,
+  headers: {
+    Authorization: `Bearer ${localStorage.getItem("token")}`,
+  },
+});
 
   const handleChange = (e) => {
     setForm({
@@ -27,7 +33,7 @@ export default function EditProductModal({ product, onClose, onUpdated }) {
     e.preventDefault();
 
     try {
-      await axios.put(`${API}/api/product/${product._id}`, {
+      await api.put(`/api/product/${product._id}`, {
         ...form,
         qty: Number(form.qty),
         press: Number(form.press),
