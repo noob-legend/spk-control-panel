@@ -24,14 +24,24 @@ export default function SPKEdit() {
   }, [id]);
 
   const handleUpdate = async (formData) => {
-    try {
-      await axios.put(`${API}/api/spk/${id}`, formData);
-      navigate("/spk");
-    } catch (error) {
-      console.error("Gagal update SPK", error);
-    }
-  };
+     try {
+    const token = localStorage.getItem("token");
 
+    await axios.put(
+      `${API}/api/spk/${id}`,
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    navigate("/spk");
+  } catch (error) {
+    console.error("Gagal update SPK", error);
+  }
+};
   if (!initialData) return <div>Loading...</div>;
 
   return (
