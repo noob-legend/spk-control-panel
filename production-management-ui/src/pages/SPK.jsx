@@ -51,7 +51,7 @@ export default function SPK() {
     if (!window.confirm("Yakin ingin menghapus SPK ini?")) return;
 
     try {
-      await api.delete(`${API}/api/spk/${id}`);
+      await api.delete(`/api/spk/${id}`);
       fetchSPK(); // refresh data
     } catch (error) {
       console.error("Gagal menghapus SPK", error);
