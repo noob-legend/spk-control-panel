@@ -24,40 +24,36 @@ export default function SPK() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
-  const fetchSPK = async () => {
-    try {
-      const response = await axios.get(`${API}/api/spk`, {
-        params: {
-          search: searchTerm,
-          status: filterStatus,
-          page: currentPage,
-          limit: 10,
-        },
-      });
+  // fetchSPK pakai axios instance
+const fetchSPK = async () => {
+  try {
+    const response = await api.get("/api/spk", {
+      params: {
+        search: searchTerm,
+        status: filterStatus,
+        page: currentPage,
+        limit: 10,
+      },
+    });
 
-      setData(Array.isArray(response.data.data) ? response.data.data : []);
-      setTotalPages(response.data.totalPages);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+    setData(Array.isArray(response.data.data) ? response.data.data : []);
+    setTotalPages(response.data.totalPages);
+  } catch (error) {
+    console.error("Gagal fetch SPK", error.response?.data || error);
+  }
+};
 
-  useEffect(() => {
-    fetchSPK();
-  }, [searchTerm, filterStatus, currentPage]);
+// DELETE SPK
+const handleDelete = async (id) => {
+  if (!window.confirm("Yakin ingin menghapus SPK ini?")) return;
 
-  // 🔥 DELETE SPK
-  const handleDelete = async (id) => {
-    if (!window.confirm("Yakin ingin menghapus SPK ini?")) return;
-
-    try {
-      await api.delete(`/api/spk/${id}`);
-      fetchSPK(); // refresh data
-    } catch (error) {
-      console.error("Gagal menghapus SPK", error);
-    }
-  };
-
+  try {
+    await api.delete(`/api/spk/${id}`);
+    fetchSPK(); // refresh data
+  } catch (error) {
+    console.error("Gagal menghapus SPK", error.response?.data || error);
+  }
+};
   const columns = [
     {
       key: "nomor_spk",
