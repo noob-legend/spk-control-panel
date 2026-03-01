@@ -5,6 +5,12 @@ import Button from "../ui/Button";
 
 export default function ProductForm({ spkId, onSuccess }) {
   const API = import.meta.env.VITE_API_URL;
+  const api = axios.create({
+  baseURL: API,
+  headers: {
+    Authorization: `Bearer ${localStorage.getItem("token")}`,
+  },
+});
   const [form, setForm] = useState({
     kode: "",
     item: "",
@@ -36,7 +42,7 @@ export default function ProductForm({ spkId, onSuccess }) {
     }
 
     try {
-      await axios.post(`${API}/api/products`, {
+      await api.post(`/api/products`, {
         ...form,
         spk_id: spkId,
       });
