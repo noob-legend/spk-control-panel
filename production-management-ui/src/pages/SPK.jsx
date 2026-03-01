@@ -11,12 +11,6 @@ import PriorityBadge from "../components/ui/PriorityBadge";
 export default function SPK() {
   const navigate = useNavigate();
   const API = import.meta.env.VITE_API_URL;
-  const api = axios.create({
-  baseURL: API,
-  headers: {
-    Authorization: `Bearer ${localStorage.getItem("token")}`,
-  },
-});
 
   const [data, setData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -24,36 +18,40 @@ export default function SPK() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
-  // fetchSPK pakai axios instance
-const fetchSPK = async () => {
-  try {
-    const response = await api.get("/api/spk", {
-      params: {
-        search: searchTerm,
-        status: filterStatus,
-        page: currentPage,
-        limit: 10,
-      },
-    });
+  const fetchSPK = async () => {
+    try {
+      const response = await axios.get(`${API}/api/spk`, {
+        params: {
+          search: searchTerm,
+          status: filterStatus,
+          page: currentPage,
+          limit: 10,
+        },
+      });
 
-    setData(Array.isArray(response.data.data) ? response.data.data : []);
-    setTotalPages(response.data.totalPages);
-  } catch (error) {
-    console.error("Gagal fetch SPK", error.response?.data || error);
-  }
-};
+      setData(Array.isArray(response.data.data) ? response.data.data : []);
+      setTotalPages(response.data.totalPages);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-// DELETE SPK
-const handleDelete = async (id) => {
-  if (!window.confirm("Yakin ingin menghapus SPK ini?")) return;
+  useEffect(() => {
+    fetchSPK();
+  }, [searchTerm, filterStatus, currentPage]);
 
-  try {
-    await api.delete(`/api/spk/${id}`);
-    fetchSPK(); // refresh data
-  } catch (error) {
-    console.error("Gagal menghapus SPK", error.response?.data || error);
-  }
-};
+  // 🔥 DELETE SPK
+  const handleDelete = async (id) => {
+    if (!window.confirm("Yakin ingin menghapus SPK ini?")) return;
+
+    try {
+      await axios.delete(`${API}/api/spk/${id}`);
+      fetchSPK(); // refresh data
+    } catch (error) {
+      console.error("Gagal menghapus SPK", error);
+    }
+  };
+
   const columns = [
     {
       key: "nomor_spk",
