@@ -10,6 +10,7 @@ POST /api/product
 export const createProduct = async (req, res) => {
   try {
     const { spk_id } = req.body;
+    console.log("REQ BODY:", req.body);
 
     // Validasi SPK ada
     const spkExists = await SPK.findById(spk_id);
@@ -28,6 +29,7 @@ export const createProduct = async (req, res) => {
       data: product,
     });
   } catch (error) {
+    console.error("CREATE ERROR:", error);
     res.status(500).json({
       success: false,
       message: error.message,
