@@ -26,7 +26,7 @@ export default function SPKEdit() {
   const handleUpdate = async (formData) => {
      try {
     const token = localStorage.getItem("token");
-
+console.log("Sending update:", formData, "Token:", token);
     await axios.put(
       `${API}/api/spk/${id}`,
       formData,
