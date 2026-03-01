@@ -5,6 +5,12 @@ import axios from "axios";
 
 export default function AddProductModal({ spkId, onClose, onAdded }) {
   const API = import.meta.env.VITE_API_URL;
+  const api = axios.create({
+  baseURL: API,
+  headers: {
+    Authorization: `Bearer ${localStorage.getItem("token")}`,
+  },
+});
   const [form, setForm] = useState({
     kode: "",
     item: "",
@@ -49,7 +55,7 @@ export default function AddProductModal({ spkId, onClose, onAdded }) {
     try {
       console.log("SPK ID TYPE:", typeof spkId);
 console.log("SPK ID VALUE:", spkId);
-      await axios.post(`${API}/api/product`, payload);
+      await api.post(`/api/product`, payload);
       onAdded();
       onClose();
     } catch (err) {
