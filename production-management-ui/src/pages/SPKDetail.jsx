@@ -13,6 +13,12 @@ export default function SPKDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const API = import.meta.env.VITE_API_URL;
+  const api = axios.create({
+  baseURL: API,
+  headers: {
+    Authorization: `Bearer ${localStorage.getItem("token")}`,
+  },
+});
 
   const [spk, setSpk] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -39,7 +45,7 @@ export default function SPKDetail() {
     if (!window.confirm("Yakin ingin menghapus produk ini?")) return;
 
     try {
-      await axios.delete(`${API}/api/product/${productId}`);
+      await api.delete(`/api/product/${productId}`);
       fetchSPK(); // refresh data
     } catch (err) {
       console.error("Gagal menghapus produk", err);
