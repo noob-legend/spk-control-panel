@@ -47,6 +47,8 @@ export default function AddProductModal({ spkId, onClose, onAdded }) {
       if (payload[key] === "") payload[key] = 0;
     });
     try {
+      console.log("SPK ID TYPE:", typeof spkId);
+console.log("SPK ID VALUE:", spkId);
       await axios.post(`${API}/api/product`, payload);
       onAdded();
       onClose();
