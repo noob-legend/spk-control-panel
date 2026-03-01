@@ -21,7 +21,7 @@ export default function SPKDetail() {
 
   const fetchSPK = async () => {
     try {
-      const res = await axios.get(`{API}/api/spk/${id}`);
+      const res = await axios.get(`${API}/api/spk/${id}`);
       const data = res.data?.data || res.data;
       setSpk(data);
     } catch (err) {
