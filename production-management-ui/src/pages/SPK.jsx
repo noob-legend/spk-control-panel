@@ -11,6 +11,12 @@ import PriorityBadge from "../components/ui/PriorityBadge";
 export default function SPK() {
   const navigate = useNavigate();
   const API = import.meta.env.VITE_API_URL;
+  const api = axios.create({
+  baseURL: API,
+  headers: {
+    Authorization: `Bearer ${localStorage.getItem("token")}`,
+  },
+});
 
   const [data, setData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -45,7 +51,7 @@ export default function SPK() {
     if (!window.confirm("Yakin ingin menghapus SPK ini?")) return;
 
     try {
-      await axios.delete(`${API}/api/spk/${id}`);
+      await api.delete(`/api/spk/${id}`);
       fetchSPK(); // refresh data
     } catch (error) {
       console.error("Gagal menghapus SPK", error);
