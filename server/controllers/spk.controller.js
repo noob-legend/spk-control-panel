@@ -113,7 +113,8 @@ export const createSPK = async (req, res) => {
    UPDATE SPK
    ========================= */
 export const updateSPK = async (req, res) => {
-  try {
+ console.log("UPDATE SPK BODY:", req.body);
+  console.log("UPDATE SPK USER:", req.user);  try {
     const updated = await SPK.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
     });

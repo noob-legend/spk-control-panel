@@ -1,10 +1,10 @@
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 
-export const auth = (req, res, next) => {
+export const auth = async (req, res, next) => {
   const headerAuth = req.headers.authorization;
 
-  if (!headerAuth || !headerAuth.startsWith("Beare ")) {
+  if (!headerAuth || !headerAuth.startsWith("Bearer ")) {
     return res
       .status(500)
       .json({ message: "mohon maaf tidak di temukan token" });
@@ -13,7 +13,7 @@ export const auth = (req, res, next) => {
   const token = headerAuth.split(" ")[1];
   const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-  const user = User.findById(decoded.id).select("-password");
+  const user = await User.findById(decoded.id).select("-password");
   if (!user) {
     return res.status(500).json({ message: "mohon maaf user tidak ditemukan" });
   }

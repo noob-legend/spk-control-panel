@@ -8,12 +8,7 @@ import authRoutes from "./routes/auth.route.js";
 import { auth, roleCheck } from "./middleware/auth.js";
 
 const app = express();
-app.use(
-  cors({
-    origin: "http://localhost:5173",
-    credentials: true,
-  }),
-);
+app.use(cors());
 
 env.config();
 connectDB();
